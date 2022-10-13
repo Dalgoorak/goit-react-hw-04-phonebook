@@ -1,0 +1,19 @@
+.contact__form {
+    width: 400px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid green;
+}
+
+.btn__add {
+    width: 150px;
+}
+
+.contact__label {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 10px;
+}

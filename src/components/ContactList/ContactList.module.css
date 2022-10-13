@@ -1,0 +1,17 @@
+.contacts__item {
+    display: flex;
+    gap: 20px;
+
+}
+
+.contacts__item :not(:last-child) {
+    margin-bottom: 20px;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    height: 20px;
+}
