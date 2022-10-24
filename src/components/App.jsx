@@ -1,10 +1,11 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import ContactForm from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
+import { ContactForm } from './ContactForm';
+import { ContactList } from './ContactList';
+import { Filter } from './Filter';
 
 import { nanoid } from 'nanoid';
+
+const CONTACTS_LIST_LOCAL_KEY = 'contacts';
 
 export default class App extends React.Component {
   state = {
@@ -18,7 +19,7 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
+    const contacts = localStorage.getItem(CONTACTS_LIST_LOCAL_KEY);
     const parseContacts = JSON.parse(contacts);
 
     if (parseContacts) {
@@ -28,7 +29,10 @@ export default class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      localStorage.setItem(
+        CONTACTS_LIST_LOCAL_KEY,
+        JSON.stringify(this.state.contacts)
+      );
     }
   }
 
