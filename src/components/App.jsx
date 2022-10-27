@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ContactForm } from './ContactForm';
 import { ContactList } from './ContactList';
 import { Filter } from './Filter';
@@ -29,12 +29,12 @@ export const App = () => {
     setFilter(event.currentTarget.value);
   };
 
-  const visibleContacts = () => {
+  const visibleContacts = useMemo(() => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+    return contacts.filter(contact => {
+      return contact.name.toLowerCase().includes(normalizedFilter);
+    });
+  }, [contacts, filter]);
 
   const addContatcts = ({ name, number }) => {
     const contact = {
@@ -50,9 +50,12 @@ export const App = () => {
     }
   };
 
-  const deleteContacts = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
-  };
+  const deleteContacts = useCallback(
+    contactId => {
+      setContacts(contacts.filter(contact => contact.id !== contactId));
+    },
+    [contacts]
+  );
 
   return (
     <div>
@@ -61,7 +64,7 @@ export const App = () => {
       <h2>Contacts</h2>
       <Filter value={filter} onChange={changeFilter} />
       <ContactList
-        contacts={visibleContacts()}
+        contacts={visibleContacts}
         onDeleteContact={deleteContacts}
       />
     </div>
